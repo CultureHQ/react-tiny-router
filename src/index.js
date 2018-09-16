@@ -5,7 +5,8 @@ import findMatch from "./find-match";
 const { Provider, Consumer } = React.createContext({
   currentPath: "",
   onLinkClick: () => {},
-  onRedirect: () => {}
+  onPathChange: () => {},
+  onPathReplace: () => {}
 });
 
 export class History extends Component {
@@ -14,15 +15,21 @@ export class History extends Component {
     this.handleRedirect(event.currentTarget.pathname);
   };
 
-  handleRedirect = currentPath => {
-    this.setState({ currentPath });
-    window.history.pushState({}, "", currentPath);
+  handlePathChange = nextPath => {
+    this.setState({ currentPath: nextPath });
+    window.history.pushState({}, "", nextPath);
+  };
+
+  handlePathReplace = nextPath => {
+    this.setState({ currentPath: nextPath });
+    window.history.replaceState({}, "", nextPath);
   };
 
   state = {
     currentPath: window.location.pathname,
     onLinkClick: this.handleLinkClick,
-    onRedirect: this.handleRedirect
+    onPathChange: this.handlePathChange,
+    onPathReplace: this.handlePathReplace
   };
 
   componentDidMount() {
