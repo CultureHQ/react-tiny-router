@@ -12,7 +12,7 @@ const { Provider, Consumer } = React.createContext({
 export class History extends Component {
   handleLinkClick = event => {
     event.preventDefault();
-    this.handleRedirect(event.currentTarget.pathname);
+    this.handlePathChange(event.currentTarget.pathname);
   };
 
   handlePathChange = nextPath => {
