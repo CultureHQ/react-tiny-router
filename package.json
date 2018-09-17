@@ -39,5 +39,9 @@
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./test/setup-tests.js"
-  }
+  },
+  "keywords": [
+    "babel-plugin-macros",
+    "react"
+  ]
 }
