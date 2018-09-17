@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import findMatch from "./find-match";
+import match from "./match";
 
 const { Provider, Consumer } = React.createContext({
   currentPath: "",
@@ -53,7 +53,9 @@ export class History extends Component {
 
 export const withRouter = Child => {
   const Parent = props => (
-    <Consumer>{state => <Child {...state} {...props} />}</Consumer>
+    <Consumer>
+      {state => <Child {...state} {...props} />}
+    </Consumer>
   );
 
   const childName = Child.displayName || Child.name || "Component";
@@ -62,9 +64,9 @@ export const withRouter = Child => {
   return Parent;
 };
 
-export const Router = ({ children }) => (
+export const FastRouter = ({ ast }) => (
   <Consumer>
-    {({ currentPath }) => findMatch(children, currentPath)}
+    {({ currentPath }) => match(ast, currentPath)}
   </Consumer>
 );
 
