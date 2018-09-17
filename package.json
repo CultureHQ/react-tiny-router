@@ -2,8 +2,9 @@
   "name": "react-tiny-router",
   "version": "1.0.0",
   "description": "A tiny React router",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
+    "build": "babel src --out-dir . --copy-files",
     "test": "jest"
   },
   "repository": {
