@@ -56,6 +56,65 @@ Now, for the actual body of the application:
 * `<Router>` - All child components within a `Router` declaration should have either a `path` prop (which is the template URL to match) or a `default` prop (which indicates which component to render should no match be found). The child components can be any valid `React` component. They will receive as props any dynamic segments specified in the template URL. (In the example above, the `Racer` component will receive a `name` prop from the URL.)
 * `<Link>` - `Link` components function very similarly to anchor tags, and should be treated the same.
 
+## `withRouter`
+
+In case you need direct access to the routing context (for instance from a `button` that will redirect when clicked), you can use the `withRouter` higher-order component. Example usage is below:
+
+```javascript
+import React, { Component, Fragment } from "react";
+
+import { History, TinyRouter, withRouter } from "react-tiny-router";
+import Router from "react-tiny-router/router.macro";
+
+const Racer = ({ name }) => ...;
+
+const TextInput = ({ onChange, value }) => ...;
+
+class RacerSearch extends Component {
+  state = { search: "" };
+
+  handleSearchChange = search => {
+    this.setState({ search });
+  };
+
+  handleButtonClick = () => {
+    const { onPathChange } = this.props;
+    const { search } = this.state;
+
+    onPathChange(`/racer/${search}`);
+  };
+
+  render() {
+    const { search } = this.state;
+
+    return (
+      <Fragment>
+        <button type="button" onClick={this.handleButtonClick}>
+          Select Your Player
+        </button>
+        <TextInput onChange={this.handleSearchChange} value={search} />
+      </Fragment>
+    );
+  }
+}
+
+const RacerSearchWithRouter = withRouter(RacerSearch);
+
+export default const MarioKart = () => (
+  <History>
+    <h1>MarioKart</h1>
+    <Router>
+      <RacerSearchWithRouter path="/" />
+      <Racer path="/racer/:name" />
+    </Router>
+  </History>
+);
+```
+
+In this case we're using the `withRouter` HOC to get access to the `onPathChange` callback. Then, when our text input is set to the correct value and the button is clicked, the route will change and the router will be rerendered.
+
+`withRouter` also gives you access to `currentPath` (the current path in state) and `onPathReplace` (which will replace the path in history as opposed to just pushing onto the stack).
+
 ## `eslint`
 
 Depending on your configuration, `eslint` may get mad at you for importing `TinyRouter` without it thinking you're using it in your source file. Rest assured, it does get used. To get rid of the linting error, you can add:
