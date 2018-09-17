@@ -64,7 +64,7 @@ export const withRouter = Child => {
   return Parent;
 };
 
-export const FastRouter = ({ ast }) => (
+export const TinyRouter = ({ ast }) => (
   <Consumer>
     {({ currentPath }) => match(ast, currentPath)}
   </Consumer>

@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import { History, withRouter, FastRouter, Link } from "../src";
+import { History, withRouter, TinyRouter, Link } from "../src";
 import Router from "../src/router.macro";
 
 test("handles routing", () => {
@@ -34,27 +34,27 @@ test("handles routing", () => {
   );
 
   component.find(Link).findWhere(link => link.props().to === "/a").simulate("click");
-  expect(component.find(FastRouter).text()).toEqual("A Page");
+  expect(component.find(TinyRouter).text()).toEqual("A Page");
 
   component.find(Link).findWhere(link => link.props().to === "/a/a").simulate("click");
-  expect(component.find(FastRouter).text()).toEqual("AA Page");
+  expect(component.find(TinyRouter).text()).toEqual("AA Page");
 
   component.find(Link).findWhere(link => link.props().to === "/b/dynamic").simulate("click");
-  expect(component.find(FastRouter).text()).toEqual("dynamic");
+  expect(component.find(TinyRouter).text()).toEqual("dynamic");
 
   component.find(History).instance().handlePathChange("/foobar");
   component.update();
-  expect(component.find(FastRouter).text()).toEqual("No match found");
+  expect(component.find(TinyRouter).text()).toEqual("No match found");
 
   component.find(History).instance().handlePathReplace("/a/b");
   component.update();
-  expect(component.find(FastRouter).text()).toEqual("AB Page");
+  expect(component.find(TinyRouter).text()).toEqual("AB Page");
 
   component.find(History).instance().handlePopState({
     currentTarget: { location: { pathname: "/b/foo" } }
   });
   component.update();
-  expect(component.find(FastRouter).text()).toEqual("foo");
+  expect(component.find(TinyRouter).text()).toEqual("foo");
 
   component.unmount();
 });
@@ -70,5 +70,5 @@ test("returns null when no matches are found and no default", () => {
   );
 
   component.find(Link).simulate("click");
-  expect(component.find(FastRouter).text()).toBe(null);
+  expect(component.find(TinyRouter).text()).toBe(null);
 });

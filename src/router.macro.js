@@ -1,6 +1,6 @@
 const { createMacro } = require("babel-plugin-macros");
 
-const buildFastRouterOpening = (t, routerIdent, ast) => (
+const buildTinyRouterOpening = (t, routerIdent, ast) => (
   t.jsxOpeningElement(
     routerIdent,
     [t.jsxAttribute(t.jsxIdentifier("ast"), t.jsxExpressionContainer(ast))],
@@ -8,8 +8,8 @@ const buildFastRouterOpening = (t, routerIdent, ast) => (
   )
 );
 
-const buildFastRouter = (t, routerIdent, ast) => (
-  t.jsxElement(buildFastRouterOpening(t, routerIdent, ast), null, [], true)
+const buildTinyRouter = (t, routerIdent, ast) => (
+  t.jsxElement(buildTinyRouterOpening(t, routerIdent, ast), null, [], true)
 );
 
 const buildDynamicProp = (t, prop) => (
@@ -119,21 +119,21 @@ const routerMacro = ({ references, babel: { types: t } }) => {
 
   let index = 0;
 
-  const { FastRouter } = routers[0].scope.getProgramParent().path.scope.bindings;
+  const { TinyRouter } = routers[0].scope.getProgramParent().path.scope.bindings;
 
   routers.forEach(router => {
     if (router.parent.type !== "JSXOpeningElement") {
       return;
     }
 
-    FastRouter.referenced = true;
-    FastRouter.references += 1;
+    TinyRouter.referenced = true;
+    TinyRouter.references += 1;
 
     const declaration = router.parentPath.parentPath;
     const ast = buildAST(t, declaration);
 
-    const routerIdent = Object.assign({}, FastRouter.identifier, { type: "JSXIdentifier" });
-    declaration.replaceWith(buildFastRouter(t, routerIdent, ast));
+    const routerIdent = Object.assign({}, TinyRouter.identifier, { type: "JSXIdentifier" });
+    declaration.replaceWith(buildTinyRouter(t, routerIdent, ast));
     index += 1;
   });
 };

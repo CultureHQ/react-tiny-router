@@ -1,21 +1,21 @@
 {
-  "name": "react-fast-router",
+  "name": "react-tiny-router",
   "version": "1.0.0",
-  "description": "A fast React router",
+  "description": "A tiny React router",
   "main": "src/index.js",
   "scripts": {
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CultureHQ/react-fast-router.git"
+    "url": "git+https://github.com/CultureHQ/react-tiny-router.git"
   },
   "author": "Kevin Deisz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CultureHQ/react-fast-router/issues"
+    "url": "https://github.com/CultureHQ/react-tiny-router/issues"
   },
-  "homepage": "https://github.com/CultureHQ/react-fast-router#readme",
+  "homepage": "https://github.com/CultureHQ/react-tiny-router#readme",
   "peerDependencies": {
     "react": "^16",
     "react-dom": "^16"
