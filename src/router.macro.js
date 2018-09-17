@@ -1,4 +1,4 @@
-const { createMacro } = require("babel-plugin-macros");
+const { createMacro, MacroError } = require("babel-plugin-macros");
 
 const buildTinyRouterOpening = (t, routerIdent, ast) => (
   t.jsxOpeningElement(
@@ -87,7 +87,7 @@ const addToAST = (t, routingAST, childNode) => {
   });
 
   if (currentTree.hasOwnProperty("render")) {
-    throw new Error(`${path} has an overlapping route`);
+    throw new MacroError(`${path} has an overlapping route`);
   }
 
   props.forEach(prop => childNode.openingElement.attributes.push(buildDynamicProp(t, prop)));
