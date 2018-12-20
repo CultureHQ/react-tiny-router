@@ -41,9 +41,9 @@ export class History extends Component {
     window.removeEventListener("popstate", this.handlePopState);
   }
 
-  handlePopState = ({ currentTarget: { location } }) => {
+  handlePopState({ currentTarget: { location } }) {
     this.setState({ currentPath: location.pathname });
-  };
+  }
 
   render() {
     const { children } = this.props;

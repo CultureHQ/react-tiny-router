@@ -1,6 +1,6 @@
 {
   "name": "react-tiny-router",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A tiny React router",
   "main": "router.js",
   "scripts": {

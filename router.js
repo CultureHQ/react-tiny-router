@@ -33,8 +33,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var _React$createContext = _react.default.createContext({
   currentPath: "",
   onLinkClick: function onLinkClick() {},
@@ -58,42 +56,30 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(History).call(this, props));
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleLinkClick", function (event) {
-      event.preventDefault();
-
-      _this.handlePathChange(event.currentTarget.pathname);
-    });
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handlePathChange", function (nextPath) {
+    var onPathChange = function onPathChange(nextPath) {
       _this.setState({
         currentPath: nextPath
       });
 
       window.history.pushState({}, "", nextPath);
-    });
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handlePathReplace", function (nextPath) {
-      _this.setState({
-        currentPath: nextPath
-      });
-
-      window.history.replaceState({}, "", nextPath);
-    });
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handlePopState", function (_ref) {
-      var location = _ref.currentTarget.location;
-
-      _this.setState({
-        currentPath: location.pathname
-      });
-    });
+    };
 
     _this.state = {
       currentPath: window.location.pathname,
-      onLinkClick: _this.handleLinkClick,
-      onPathChange: _this.handlePathChange,
-      onPathReplace: _this.handlePathReplace
+      onPathChange: onPathChange,
+      onPathReplace: function onPathReplace(nextPath) {
+        _this.setState({
+          currentPath: nextPath
+        });
+
+        window.history.replaceState({}, "", nextPath);
+      },
+      onLinkClick: function onLinkClick(event) {
+        event.preventDefault();
+        onPathChange(event.currentTarget.pathname);
+      }
     };
+    _this.handlePopState = _this.handlePopState.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -106,6 +92,14 @@ function (_Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       window.removeEventListener("popstate", this.handlePopState);
+    }
+  }, {
+    key: "handlePopState",
+    value: function handlePopState(_ref) {
+      var location = _ref.currentTarget.location;
+      this.setState({
+        currentPath: location.pathname
+      });
     }
   }, {
     key: "render",

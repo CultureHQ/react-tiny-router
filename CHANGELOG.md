@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.0.2] - 2018-12-20
+### Changed
+- Simplify babel config by dropping class properties proposal.
+
 ## [1.0.1] - 2018-12-20
 ### Changed
 - Support paths with more complex patterns by replacing with string literals instead of identifiers in the compiled AST.
@@ -14,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 - First release! 🎉
 
-[Unreleased]: https://github.com/CultureHQ/components/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/CultureHQ/components/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/CultureHQ/components/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/CultureHQ/components/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/CultureHQ/components/compare/aee58e...v1.0.0
