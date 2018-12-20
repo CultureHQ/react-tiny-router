@@ -39,7 +39,7 @@
     "jest": "^23.6.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-testing-library": "^5.4.1"
+    "react-testing-library": "^5.4.2"
   },
   "keywords": [
     "babel-plugin-macros",
