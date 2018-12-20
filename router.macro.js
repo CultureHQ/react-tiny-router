@@ -2,9 +2,12 @@
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 var _require = require("babel-plugin-macros"),
     createMacro = _require.createMacro,
     MacroError = _require.MacroError;
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var buildTinyRouterOpening = function buildTinyRouterOpening(t, routerIdent, ast) {
   return t.jsxOpeningElement(routerIdent, [t.jsxAttribute(t.jsxIdentifier("ast"), t.jsxExpressionContainer(ast))], true);
@@ -40,6 +43,9 @@ var buildASTExpression = function buildASTExpression(t, ast) {
 
         case "string":
           value = t.stringLiteral(value);
+          break;
+
+        default:
           break;
       }
     }
@@ -77,7 +83,7 @@ var addToAST = function addToAST(t, routingAST, childNode) {
       normalized = ":dynamic";
     }
 
-    if (!currentTree.next.hasOwnProperty(normalized)) {
+    if (!hasOwnProperty.call(currentTree.next, normalized)) {
       currentTree.next[normalized] = {
         next: {}
       };
@@ -86,7 +92,7 @@ var addToAST = function addToAST(t, routingAST, childNode) {
     currentTree = currentTree.next[normalized];
   });
 
-  if (currentTree.hasOwnProperty("render")) {
+  if (hasOwnProperty.call(currentTree, "render")) {
     throw new MacroError("".concat(path, " has an overlapping route"));
   }
 
@@ -127,7 +133,6 @@ var routerMacro = function routerMacro(_ref3) {
       t = _ref3.babel.types;
   var _references$default = references.default,
       routers = _references$default === void 0 ? [] : _references$default;
-  var index = 0;
   var TinyRouter = routers[0].scope.getProgramParent().path.scope.bindings.TinyRouter;
   routers.forEach(function (router) {
     if (router.parent.type !== "JSXOpeningElement") {
@@ -142,7 +147,6 @@ var routerMacro = function routerMacro(_ref3) {
       type: "JSXIdentifier"
     });
     declaration.replaceWith(buildTinyRouter(t, routerIdent, ast));
-    index += 1;
   });
 };
 

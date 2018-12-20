@@ -2,7 +2,7 @@ import React from "react";
 
 import { cleanup, fireEvent, render } from "react-testing-library";
 
-import { History, withRouter, TinyRouter, Link } from "../index";
+import { History, withRouter, TinyRouter, Link } from "../router";
 import Router from "../router.macro";
 
 afterEach(cleanup);

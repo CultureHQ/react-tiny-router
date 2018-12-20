@@ -43,24 +43,20 @@ var _React$createContext = _react.default.createContext({
 }),
     Provider = _React$createContext.Provider,
     Consumer = _React$createContext.Consumer;
+/* eslint-disable react/no-unused-state */
+
 
 var History =
 /*#__PURE__*/
 function (_Component) {
   _inherits(History, _Component);
 
-  function History() {
-    var _getPrototypeOf2;
-
+  function History(props) {
     var _this;
 
     _classCallCheck(this, History);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(History)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(History).call(this, props));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleLinkClick", function (event) {
       event.preventDefault();
@@ -84,13 +80,6 @@ function (_Component) {
       window.history.replaceState({}, "", nextPath);
     });
 
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "state", {
-      currentPath: window.location.pathname,
-      onLinkClick: _this.handleLinkClick,
-      onPathChange: _this.handlePathChange,
-      onPathReplace: _this.handlePathReplace
-    });
-
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handlePopState", function (_ref) {
       var location = _ref.currentTarget.location;
 
@@ -99,6 +88,12 @@ function (_Component) {
       });
     });
 
+    _this.state = {
+      currentPath: window.location.pathname,
+      onLinkClick: _this.handleLinkClick,
+      onPathChange: _this.handlePathChange,
+      onPathReplace: _this.handlePathReplace
+    };
     return _this;
   }
 
@@ -124,6 +119,8 @@ function (_Component) {
 
   return History;
 }(_react.Component);
+/* eslint-enable react/no-unused-state */
+
 
 exports.History = History;
 

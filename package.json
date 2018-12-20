@@ -2,7 +2,7 @@
   "name": "react-tiny-router",
   "version": "1.0.1",
   "description": "A tiny React router",
-  "main": "index.js",
+  "main": "router.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore '**/__tests__/**'",
     "lint": "eslint .",
