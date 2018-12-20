@@ -54,6 +54,8 @@ Now, for the actual body of the application:
 * `<Router>` - All child components within a `Router` declaration should have either a `path` prop (which is the template URL to match) or a `default` prop (which indicates which component to render should no match be found). The child components can be any valid `React` component. They will receive as props any dynamic segments specified in the template URL. (In the example above, the `Racer` component will receive a `name` prop from the URL.)
 * `<Link>` - `Link` components function very similarly to anchor tags, and should be treated the same.
 
+### Internals
+
 Internally when `babel` compiles this file, the JSX expressions inside of the `Router` component become a large `ast` object that becomes a prop to the `TinyRouter` component that replaces the `Router`. The `ast` for the above example would look like:
 
 ```javascript
