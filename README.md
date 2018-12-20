@@ -56,25 +56,27 @@ Now, for the actual body of the application:
 
 ### Internals
 
-Internally when `babel` compiles this file, the JSX expressions inside of the `Router` component become a large `ast` object that becomes a prop to the `TinyRouter` component that replaces the `Router`. The `ast` for the above example would look like:
+Internally when `babel` compiles this file, the JSX expressions inside of the `Router` component become a large `ast` object that becomes a prop to the `TinyRouter` component that replaces the `Router`. So in the above example, the entire `Router` expression gets replaced by:
 
 ```javascript
-{
-  render: () => <p>Welcome!</p>,
-  next: {
-    maps: {
-      render: () => <Maps />
-    },
-    racer: {
-      next: {
-        ":dynamic": {
-          render: name => <Racer name={name} />
+<TinyRouter
+  ast={{
+    render: () => <p>Welcome!</p>,
+    next: {
+      maps: {
+        render: () => <Maps />
+      },
+      racer: {
+        next: {
+          ":dynamic": {
+            render: name => <Racer name={name} />
+          }
         }
       }
-    }
-  },
-  default: () => <p>Looks like you made a wrong turn!</p>
-}
+    },
+    default: () => <p>Looks like you made a wrong turn!</p>
+  }}
+/>
 ```
 
 This `ast` prop is then used by walking through each segment of the current URL (split by parentheses). For each segment, it will check the `next` object for a key that matches the segment. If found, it will move into that subtree and continue. Once all of the segments are exhausted, it will look for a `render` function at that node in the tree to know what to render.
