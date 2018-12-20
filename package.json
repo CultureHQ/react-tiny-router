@@ -22,20 +22,20 @@
     "react-dom": "^16"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-0",
     "babel-jest": "^23.6.0",
-    "babel-plugin-macros": "^2.4.0",
-    "enzyme": "^3.5.1",
-    "enzyme-adapter-react-16": "^1.4.0",
+    "babel-plugin-macros": "^2.4.3",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "jest": "^23.6.0",
     "packfiles": "^0.0.2",
-    "react": "^16.5.1",
-    "react-dom": "^16.5.1"
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./test/setup-tests.js"
