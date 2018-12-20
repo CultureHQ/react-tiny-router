@@ -12,12 +12,25 @@ export class History extends Component {
   constructor(props) {
     super(props);
 
+    const onPathChange = nextPath => {
+      this.setState({ currentPath: nextPath });
+      window.history.pushState({}, "", nextPath);
+    };
+
     this.state = {
       currentPath: window.location.pathname,
-      onLinkClick: this.handleLinkClick,
-      onPathChange: this.handlePathChange,
-      onPathReplace: this.handlePathReplace
+      onPathChange,
+      onPathReplace: nextPath => {
+        this.setState({ currentPath: nextPath });
+        window.history.replaceState({}, "", nextPath);
+      },
+      onLinkClick: event => {
+        event.preventDefault();
+        onPathChange(event.currentTarget.pathname);
+      }
     };
+
+    this.handlePopState = this.handlePopState.bind(this);
   }
 
   componentDidMount() {
@@ -27,21 +40,6 @@ export class History extends Component {
   componentWillUnmount() {
     window.removeEventListener("popstate", this.handlePopState);
   }
-
-  handleLinkClick = event => {
-    event.preventDefault();
-    this.handlePathChange(event.currentTarget.pathname);
-  };
-
-  handlePathChange = nextPath => {
-    this.setState({ currentPath: nextPath });
-    window.history.pushState({}, "", nextPath);
-  };
-
-  handlePathReplace = nextPath => {
-    this.setState({ currentPath: nextPath });
-    window.history.replaceState({}, "", nextPath);
-  };
 
   handlePopState = ({ currentTarget: { location } }) => {
     this.setState({ currentPath: location.pathname });
