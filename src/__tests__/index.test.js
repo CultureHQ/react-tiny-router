@@ -64,7 +64,7 @@ test("handles pop state", () => {
     fire[event] = callback;
   });
 
-  const { getByText, queryByText } = render(
+  const { queryByText } = render(
     <History>
       <Router>
         <p path="/foo">foo</p>

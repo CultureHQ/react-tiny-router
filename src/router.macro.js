@@ -1,4 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { createMacro, MacroError } = require("babel-plugin-macros");
+
+const { hasOwnProperty } = Object.prototype;
 
 const buildTinyRouterOpening = (t, routerIdent, ast) => (
   t.jsxOpeningElement(
@@ -42,6 +45,8 @@ const buildASTExpression = (t, ast) => {
         case "string":
           value = t.stringLiteral(value);
           break;
+        default:
+          break;
       }
     }
 
@@ -78,14 +83,14 @@ const addToAST = (t, routingAST, childNode) => {
       normalized = ":dynamic";
     }
 
-    if (!currentTree.next.hasOwnProperty(normalized)) {
+    if (!hasOwnProperty.call(currentTree.next, normalized)) {
       currentTree.next[normalized] = { next: {} };
     }
 
     currentTree = currentTree.next[normalized];
   });
 
-  if (currentTree.hasOwnProperty("render")) {
+  if (hasOwnProperty.call(currentTree, "render")) {
     throw new MacroError(`${path} has an overlapping route`);
   }
 
@@ -103,7 +108,7 @@ const buildAST = (t, declaration) => {
 
   if (defaultIndex !== -1) {
     const defaultChild = children.splice(defaultIndex, 1)[0];
-    extractProp(defaultChild, "default")
+    extractProp(defaultChild, "default");
 
     ast.default = buildRenderFunc(t, [], defaultChild);
   }
@@ -115,9 +120,6 @@ const buildAST = (t, declaration) => {
 
 const routerMacro = ({ references, babel: { types: t } }) => {
   const { default: routers = [] } = references;
-
-  let index = 0;
-
   const { TinyRouter } = routers[0].scope.getProgramParent().path.scope.bindings;
 
   routers.forEach(router => {
@@ -133,7 +135,6 @@ const routerMacro = ({ references, babel: { types: t } }) => {
 
     const routerIdent = Object.assign({}, TinyRouter.identifier, { type: "JSXIdentifier" });
     declaration.replaceWith(buildTinyRouter(t, routerIdent, ast));
-    index += 1;
   });
 };
 

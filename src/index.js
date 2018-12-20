@@ -7,7 +7,27 @@ const { Provider, Consumer } = React.createContext({
   onPathReplace: () => {}
 });
 
+/* eslint-disable react/no-unused-state */
 export class History extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentPath: window.location.pathname,
+      onLinkClick: this.handleLinkClick,
+      onPathChange: this.handlePathChange,
+      onPathReplace: this.handlePathReplace
+    };
+  }
+
+  componentDidMount() {
+    window.addEventListener("popstate", this.handlePopState);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.handlePopState);
+  }
+
   handleLinkClick = event => {
     event.preventDefault();
     this.handlePathChange(event.currentTarget.pathname);
@@ -23,21 +43,6 @@ export class History extends Component {
     window.history.replaceState({}, "", nextPath);
   };
 
-  state = {
-    currentPath: window.location.pathname,
-    onLinkClick: this.handleLinkClick,
-    onPathChange: this.handlePathChange,
-    onPathReplace: this.handlePathReplace
-  };
-
-  componentDidMount() {
-    window.addEventListener("popstate", this.handlePopState);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("popstate", this.handlePopState);
-  }
-
   handlePopState = ({ currentTarget: { location } }) => {
     this.setState({ currentPath: location.pathname });
   };
@@ -48,6 +53,7 @@ export class History extends Component {
     return <Provider value={this.state}>{children}</Provider>;
   }
 }
+/* eslint-enable react/no-unused-state */
 
 export const withRouter = Child => props => (
   <Consumer>
