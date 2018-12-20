@@ -128,15 +128,11 @@ function (_Component) {
 exports.History = History;
 
 var withRouter = function withRouter(Child) {
-  var Parent = function Parent(props) {
+  return function (props) {
     return _react.default.createElement(Consumer, null, function (state) {
       return _react.default.createElement(Child, _extends({}, state, props));
     });
   };
-
-  var childName = Child.displayName || Child.name || "Component";
-  Parent.displayName = "withRouter(".concat(childName, ")");
-  return Parent;
 };
 
 exports.withRouter = withRouter;

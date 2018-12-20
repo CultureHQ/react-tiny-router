@@ -3,7 +3,8 @@
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var _require = require("babel-plugin-macros"),
-    createMacro = _require.createMacro;
+    createMacro = _require.createMacro,
+    MacroError = _require.MacroError;
 
 var buildTinyRouterOpening = function buildTinyRouterOpening(t, routerIdent, ast) {
   return t.jsxOpeningElement(routerIdent, [t.jsxAttribute(t.jsxIdentifier("ast"), t.jsxExpressionContainer(ast))], true);
@@ -43,8 +44,7 @@ var buildASTExpression = function buildASTExpression(t, ast) {
       }
     }
 
-    var objectKey = key.startsWith(":") ? t.stringLiteral(key) : t.identifier(key);
-    return t.objectProperty(objectKey, value);
+    return t.objectProperty(t.stringLiteral(key), value);
   });
   return t.objectExpression(properties);
 };
@@ -87,7 +87,7 @@ var addToAST = function addToAST(t, routingAST, childNode) {
   });
 
   if (currentTree.hasOwnProperty("render")) {
-    throw new Error("".concat(path, " has an overlapping route"));
+    throw new MacroError("".concat(path, " has an overlapping route"));
   }
 
   props.forEach(function (prop) {
