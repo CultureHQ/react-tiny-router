@@ -45,8 +45,7 @@ const buildASTExpression = (t, ast) => {
       }
     }
 
-    const objectKey = key.startsWith(":") ? t.stringLiteral(key) : t.identifier(key);
-    return t.objectProperty(objectKey, value);
+    return t.objectProperty(t.stringLiteral(key), value);
   });
 
   return t.objectExpression(properties);

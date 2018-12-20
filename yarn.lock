@@ -3104,7 +3104,7 @@ npm-bundled@^1.0.1:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.5.tgz#3c1732b7ba936b3a10325aef616467c0ccbcc979"
 
-npm-packlist@^1.1.6, npm-packlist@^1.1.9:
+npm-packlist@^1.1.6:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/npm-packlist/-/npm-packlist-1.1.11.tgz#84e8c683cbe7867d34b1d357d893ce29e28a02de"
   dependencies:
@@ -3295,12 +3295,6 @@ p-locate@^2.0.0:
 p-try@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
-
-packfiles@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/packfiles/-/packfiles-0.0.2.tgz#0ed4483d8070b729c32c26dd7027dee80e498d95"
-  dependencies:
-    npm-packlist "^1.1.9"
 
 parse-glob@^3.0.4:
   version "3.0.4"

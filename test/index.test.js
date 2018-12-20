@@ -8,7 +8,7 @@ test("handles routing", () => {
   const Dynamic = ({ segment }) => <p>{segment}</p>;
 
   const Button = withRouter(({ onPathChange }) => (
-    <button type="button" onClick={() => onPathChange("/c")}>C</button>
+    <button type="button" onClick={() => onPathChange("/d")}>D</button>
   ));
 
   const component = mount(
@@ -19,6 +19,7 @@ test("handles routing", () => {
         <li><Link to="/a/b">AB</Link></li>
         <li><Link to="/b">B</Link></li>
         <li><Link to="/b/dynamic">BDynamic</Link></li>
+        <li><Link to="/c-c">C</Link></li>
         <li><Button /></li>
       </ul>
       <Router>
@@ -27,7 +28,8 @@ test("handles routing", () => {
         <p path="/a/b">AB Page</p>
         <p path="/b">B Page</p>
         <Dynamic path="/b/:segment" />
-        <p path="/c">C Page</p>
+        <p path="/c-c">C Page</p>
+        <p path="/d">D Page</p>
         <p default>No match found</p>
       </Router>
     </History>
@@ -55,6 +57,9 @@ test("handles routing", () => {
   });
   component.update();
   expect(component.find(TinyRouter).text()).toEqual("foo");
+
+  component.find(Link).findWhere(link => link.props().to === "/c-c").simulate("click");
+  expect(component.find(TinyRouter).text()).toEqual("C Page");
 
   component.unmount();
 });

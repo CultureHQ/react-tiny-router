@@ -8,7 +8,7 @@ A tiny router for React.js.
 
 ## Getting started
 
-`react-tiny-router` is a router for `React.js` projects. It aims to be a small and out of the way as possible. Under the hood it uses `babel-plugin-macros` to precompile the paths that you provide to ensure it can route as efficiently as possible. In order for this to work, your build process will need to be [set up with the macros plugin](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md).
+`react-tiny-router` is a router for `React.js` projects. It aims to be a small and out of the way as possible. Under the hood it uses `babel-plugin-macros` to precompile the paths that you provide to ensure it can route as efficiently as possible. In order for this to work, your build process will need to be [set up with the babel macros plugin](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md).
 
 Here's an example application that we can look at in detail:
 

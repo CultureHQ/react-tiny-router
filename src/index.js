@@ -49,18 +49,11 @@ export class History extends Component {
   }
 }
 
-export const withRouter = Child => {
-  const Parent = props => (
-    <Consumer>
-      {state => <Child {...state} {...props} />}
-    </Consumer>
-  );
-
-  const childName = Child.displayName || Child.name || "Component";
-  Parent.displayName = `withRouter(${childName})`;
-
-  return Parent;
-};
+export const withRouter = Child => props => (
+  <Consumer>
+    {state => <Child {...state} {...props} />}
+  </Consumer>
+);
 
 export const Link = ({ to, children, ...props }) => (
   <Consumer>

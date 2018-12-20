@@ -1,6 +1,6 @@
 {
   "name": "react-tiny-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny React router",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,6 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "jest": "^23.6.0",
-    "packfiles": "^0.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },
