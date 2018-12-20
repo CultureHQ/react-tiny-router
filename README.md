@@ -54,6 +54,31 @@ Now, for the actual body of the application:
 * `<Router>` - All child components within a `Router` declaration should have either a `path` prop (which is the template URL to match) or a `default` prop (which indicates which component to render should no match be found). The child components can be any valid `React` component. They will receive as props any dynamic segments specified in the template URL. (In the example above, the `Racer` component will receive a `name` prop from the URL.)
 * `<Link>` - `Link` components function very similarly to anchor tags, and should be treated the same.
 
+Internally when `babel` compiles this file, the JSX expressions inside of the `Router` component become a large `ast` object that becomes a prop to the `TinyRouter` component that replaces the `Router`. The `ast` for the above example would look like:
+
+```javascript
+{
+  render: () => <p>Welcome!</p>,
+  next: {
+    maps: {
+      render: () => <Maps />
+    },
+    racer: {
+      next: {
+        ":dynamic": {
+          render: name => <Racer name={name} />
+        }
+      }
+    }
+  },
+  default: () => <p>Looks like you made a wrong turn!</p>
+}
+```
+
+This `ast` prop is then used by walking through each segment of the current URL (split by parentheses). For each segment, it will check the `next` object for a key that matches the segment. If found, it will move into that subtree and continue. Once all of the segments are exhausted, it will look for a `render` function at that node in the tree to know what to render.
+
+Dynamic route segments are handled effectively the same way, except that they have a special `:dynamic` key which the router will fall back to if a more specific route is not matched first. In this case the dynamic segment becomes a prop on the route's component.
+
 ## `withRouter`
 
 In case you need direct access to the routing context (for instance from a `button` that will redirect when clicked), you can use the `withRouter` higher-order component. Example usage is below:
