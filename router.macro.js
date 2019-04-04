@@ -119,7 +119,7 @@ var buildAST = function buildAST(t, declaration) {
   if (defaultIndex !== -1) {
     var defaultChild = children.splice(defaultIndex, 1)[0];
     extractProp(defaultChild, "default");
-    ast.default = buildRenderFunc(t, [], defaultChild);
+    ast["default"] = buildRenderFunc(t, [], defaultChild);
   }
 
   children.forEach(function (node) {
@@ -131,7 +131,7 @@ var buildAST = function buildAST(t, declaration) {
 var routerMacro = function routerMacro(_ref3) {
   var references = _ref3.references,
       t = _ref3.babel.types;
-  var _references$default = references.default,
+  var _references$default = references["default"],
       routers = _references$default === void 0 ? [] : _references$default;
   var TinyRouter = routers[0].scope.getProgramParent().path.scope.bindings.TinyRouter;
   routers.forEach(function (router) {

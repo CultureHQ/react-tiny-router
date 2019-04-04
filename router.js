@@ -3,184 +3,131 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TinyRouter = exports.Link = exports.withRouter = exports.History = void 0;
+exports.TinyRouter = exports.Link = exports.History = exports.useRouter = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var _React$createContext = _react.default.createContext({
-  currentPath: "",
+var RouterContext = _react["default"].createContext({
+  currentPath: "/",
   onLinkClick: function onLinkClick() {},
   onPathChange: function onPathChange() {},
   onPathReplace: function onPathReplace() {}
-}),
-    Provider = _React$createContext.Provider,
-    Consumer = _React$createContext.Consumer;
-/* eslint-disable react/no-unused-state */
+});
 
-
-var History =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(History, _Component);
-
-  function History(props) {
-    var _this;
-
-    _classCallCheck(this, History);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(History).call(this, props));
-
-    var onPathChange = function onPathChange(nextPath) {
-      _this.setState({
-        currentPath: nextPath
-      });
-
-      window.history.pushState({}, "", nextPath);
-    };
-
-    _this.state = {
-      currentPath: window.location.pathname,
-      onPathChange: onPathChange,
-      onPathReplace: function onPathReplace(nextPath) {
-        _this.setState({
-          currentPath: nextPath
-        });
-
-        window.history.replaceState({}, "", nextPath);
-      },
-      onLinkClick: function onLinkClick(event) {
-        event.preventDefault();
-        onPathChange(event.currentTarget.pathname);
-      }
-    };
-    _this.handlePopState = _this.handlePopState.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(History, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      window.addEventListener("popstate", this.handlePopState);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      window.removeEventListener("popstate", this.handlePopState);
-    }
-  }, {
-    key: "handlePopState",
-    value: function handlePopState(_ref) {
-      var location = _ref.currentTarget.location;
-      this.setState({
-        currentPath: location.pathname
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var children = this.props.children;
-      return _react.default.createElement(Provider, {
-        value: this.state
-      }, children);
-    }
-  }]);
-
-  return History;
-}(_react.Component);
-/* eslint-enable react/no-unused-state */
-
-
-exports.History = History;
-
-var withRouter = function withRouter(Child) {
-  return function (props) {
-    return _react.default.createElement(Consumer, null, function (state) {
-      return _react.default.createElement(Child, _extends({}, state, props));
-    });
-  };
+var useRouter = function useRouter() {
+  return (0, _react.useContext)(RouterContext);
 };
 
-exports.withRouter = withRouter;
+exports.useRouter = useRouter;
+
+var History = function History(_ref) {
+  var children = _ref.children;
+
+  var _useState = (0, _react.useState)(window.location.pathname),
+      _useState2 = _slicedToArray(_useState, 2),
+      currentPath = _useState2[0],
+      setCurrentPath = _useState2[1];
+
+  var value = (0, _react.useMemo)(function () {
+    return {
+      currentPath: currentPath,
+      onLinkClick: function onLinkClick(event) {
+        event.preventDefault();
+        setCurrentPath(event.currentTarget.pathname);
+      },
+      onPathChange: function onPathChange(nextPath) {
+        setCurrentPath(nextPath);
+        window.history.pushState({}, "", nextPath);
+      },
+      onPathReplace: function onPathReplace(nextPath) {
+        setCurrentPath(nextPath);
+        window.history.replaceState({}, "", nextPath);
+      }
+    };
+  }, [currentPath, setCurrentPath]);
+  (0, _react.useEffect)(function () {
+    var onEvent = function onEvent(event) {
+      return setCurrentPath(event.currentTarget.location.pathname);
+    };
+
+    window.addEventListener("popstate", onEvent);
+    return function () {
+      return window.removeEventListener("popstate", onEvent);
+    };
+  }, [setCurrentPath]);
+  return _react["default"].createElement(RouterContext.Provider, {
+    value: value
+  }, children);
+};
+
+exports.History = History;
 
 var Link = function Link(_ref2) {
   var to = _ref2.to,
       children = _ref2.children,
       props = _objectWithoutProperties(_ref2, ["to", "children"]);
 
-  return _react.default.createElement(Consumer, null, function (_ref3) {
-    var onLinkClick = _ref3.onLinkClick;
-    return _react.default.createElement("a", _extends({}, props, {
-      href: to,
-      onClick: onLinkClick
-    }), children);
-  });
+  var _useRouter = useRouter(),
+      onLinkClick = _useRouter.onLinkClick;
+
+  return _react["default"].createElement("a", _extends({}, props, {
+    href: to,
+    onClick: onLinkClick
+  }), children);
 };
 
 exports.Link = Link;
 
-var match = function match(ast, currentPath) {
+var TinyRouter = function TinyRouter(_ref3) {
+  var ast = _ref3.ast;
+
+  var _useRouter2 = useRouter(),
+      currentPath = _useRouter2.currentPath;
+
   var segments = currentPath.split("/").filter(Boolean);
   var dynamics = [];
-  var currentAst = ast;
+  var node = ast;
   var matched = true;
 
   for (var idx = 0; idx < segments.length; idx += 1) {
-    if (currentAst.next[segments[idx]]) {
-      currentAst = currentAst.next[segments[idx]];
-    } else if (currentAst.next[":dynamic"]) {
+    if (node.next[segments[idx]]) {
+      node = node.next[segments[idx]];
+    } else if (node.next[":dynamic"]) {
       dynamics.push(segments[idx]);
-      currentAst = currentAst.next[":dynamic"];
+      node = node.next[":dynamic"];
     } else {
       matched = false;
       break;
     }
   }
 
-  matched = matched && currentAst.render;
+  matched = matched && node.render;
 
-  if (!matched && ast.default) {
-    return ast.default();
+  if (!matched && ast["default"]) {
+    return ast["default"]();
   }
 
   if (!matched) {
     return null;
   }
 
-  return currentAst.render.apply(null, dynamics);
-};
-
-var TinyRouter = function TinyRouter(_ref4) {
-  var ast = _ref4.ast;
-  return _react.default.createElement(Consumer, null, function (_ref5) {
-    var currentPath = _ref5.currentPath;
-    return match(ast, currentPath);
-  });
+  return node.render.apply(null, dynamics);
 };
 
 exports.TinyRouter = TinyRouter;
