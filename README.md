@@ -83,64 +83,55 @@ This `ast` prop is then used by walking through each segment of the current URL 
 
 Dynamic route segments are handled effectively the same way, except that they have a special `:dynamic` key which the router will fall back to if a more specific route is not matched first. In this case the dynamic segment becomes a prop on the route's component.
 
-## `withRouter`
+## `useRouter`
 
-In case you need direct access to the routing context (for instance from a `button` that will redirect when clicked), you can use the `withRouter` higher-order component. Example usage is below:
+In case you need direct access to the routing context (for instance from a `button` that will redirect when clicked), you can use the `useRouter` named export. Example usage is below:
 
 ```javascript
-import React, { Component, Fragment } from "react";
+import React from "react";
 
-import { History, TinyRouter, withRouter } from "react-tiny-router";
+import { History, TinyRouter, useRouter } from "react-tiny-router";
 import Router from "react-tiny-router/router.macro";
 
 const Racer = ({ name }) => ...;
 
 const TextInput = ({ onChange, value }) => ...;
 
-class RacerSearch extends Component {
-  state = { search: "" };
+const RacerSearch = () => {
+  const { onPathChange } = useRouter();
+  const [search, setSearch] = useState("");
 
-  handleSearchChange = search => {
-    this.setState({ search });
-  };
+  const onButtonClick = useCallback(
+    () => onPathChange(`/racer/${search}`),
+    [onPathChange, search]
+  );
 
-  handleButtonClick = () => {
-    const { onPathChange } = this.props;
-    const { search } = this.state;
+  return (
+    <>
+      <button type="button" onClick={onButtonClick}>
+        Select Your Player
+      </button>
+      <TextInput onChange={setSearch} value={search} />
+    </>
+  );
+};
 
-    onPathChange(`/racer/${search}`);
-  };
-
-  render() {
-    const { search } = this.state;
-
-    return (
-      <Fragment>
-        <button type="button" onClick={this.handleButtonClick}>
-          Select Your Player
-        </button>
-        <TextInput onChange={this.handleSearchChange} value={search} />
-      </Fragment>
-    );
-  }
-}
-
-const RacerSearchWithRouter = withRouter(RacerSearch);
-
-export default const MarioKart = () => (
+const MarioKart = () => (
   <History>
     <h1>MarioKart</h1>
     <Router>
-      <RacerSearchWithRouter path="/" />
+      <RacerSearch path="/" />
       <Racer path="/racer/:name" />
     </Router>
   </History>
 );
+
+export default MarioKart;
 ```
 
-In this case we're using the `withRouter` HOC to get access to the `onPathChange` callback. Then, when our text input is set to the correct value and the button is clicked, the route will change and the router will be rerendered.
+In this case we're using the `useRouter` hook to get access to the `onPathChange` callback. Then, when our text input is set to the correct value and the button is clicked, the route will change and the router will be rerendered.
 
-`withRouter` also gives you access to `currentPath` (the current path in state) and `onPathReplace` (which will replace the path in history as opposed to just pushing onto the stack).
+`useRouter` also gives you access to `currentPath` (the current path in state) and `onPathReplace` (which will replace the path in history as opposed to just pushing onto the stack).
 
 ## `eslint`
 

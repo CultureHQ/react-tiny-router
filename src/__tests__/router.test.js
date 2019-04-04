@@ -1,8 +1,8 @@
 import React from "react";
 
-import { cleanup, fireEvent, render } from "react-testing-library";
+import { act, cleanup, fireEvent, render } from "react-testing-library";
 
-import { History, withRouter, TinyRouter, Link } from "../router";
+import { History, useRouter, TinyRouter, Link } from "../router";
 import Router from "../router.macro";
 
 afterEach(cleanup);
@@ -10,9 +10,11 @@ afterEach(cleanup);
 test("handles routing", () => {
   const Dynamic = ({ segment }) => <p>{segment}</p>;
 
-  const Button = withRouter(({ onPathReplace }) => (
-    <button type="button" onClick={() => onPathReplace("/d")}>D</button>
-  ));
+  const Button = () => {
+    const { onPathReplace } = useRouter();
+
+    return <button type="button" onClick={() => onPathReplace("/d")}>D</button>;
+  };
 
   const { getByText, queryByText } = render(
     <History>
@@ -72,7 +74,7 @@ test("handles pop state", () => {
     </History>
   );
 
-  fire.popstate({ currentTarget: { location: { pathname: "/foo" } } });
+  act(() => void fire.popstate({ currentTarget: { location: { pathname: "/foo" } } }));
   expect(queryByText("foo")).toBeTruthy();
 
   window.addEventListener.mockRestore();
