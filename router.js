@@ -84,7 +84,8 @@ var Link = function Link(_ref2) {
       props = _objectWithoutProperties(_ref2, ["to", "children"]);
 
   var _useRouter = useRouter(),
-      onLinkClick = _useRouter.onLinkClick;
+      onLinkClick = _useRouter.onLinkClick; // eslint-disable-next-line react/jsx-props-no-spreading
+
 
   return _react["default"].createElement("a", _extends({}, props, {
     href: to,

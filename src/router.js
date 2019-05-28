@@ -53,6 +53,7 @@ export const History = ({ children }) => {
 export const Link = ({ to, children, ...props }) => {
   const { onLinkClick } = useRouter();
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <a {...props} href={to} onClick={onLinkClick}>{children}</a>;
 };
 
