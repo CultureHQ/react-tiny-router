@@ -28,10 +28,10 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@culturehq/scripts": "^0.2.0",
+    "@testing-library/react": "^8.0.1",
     "babel-plugin-macros": "^2.5.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-testing-library": "^7.0.1"
+    "react-dom": "^16.8.6"
   },
   "eslintConfig": {
     "extends": "@culturehq",
