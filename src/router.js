@@ -18,6 +18,7 @@ export const History = ({ children }) => {
       onLinkClick: event => {
         event.preventDefault();
         setCurrentPath(event.currentTarget.pathname);
+        window.history.pushState({}, "", event.currentTarget.pathname);
       },
       onPathChange: nextPath => {
         setCurrentPath(nextPath);
