@@ -138,4 +138,4 @@ const routerMacro = ({ references, babel: { types: t } }) => {
   });
 };
 
-export default createMacro(routerMacro);
+module.exports = createMacro(routerMacro);
