@@ -35,7 +35,10 @@
     "react-dom": "^16.9.0"
   },
   "eslintConfig": {
-    "extends": "@culturehq",
+    "extends": [
+      "@culturehq",
+      "@culturehq/eslint-config/react"
+    ],
     "rules": {
       "no-unused-vars": [
         "error",
