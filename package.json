@@ -27,7 +27,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
-    "@culturehq/scripts": "^3.0.1",
+    "@culturehq/scripts": "^4.0.1",
     "@testing-library/react": "^9.1.0",
     "babel-jest": "^24.8.0",
     "babel-plugin-macros": "^2.6.1",
