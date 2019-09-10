@@ -1,10 +1,17 @@
 import * as React from "react";
 
-const RouterContext = React.createContext({
+type ContextValue = {
+  currentPath: string;
+  onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  onPathChange: (nextPath: string) => void;
+  onPathReplace: (nextPath: string) => void;
+};
+
+const RouterContext = React.createContext<ContextValue>({
   currentPath: "/",
-  onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>) => {},
-  onPathChange: (nextPath: string) => {},
-  onPathReplace: (nextPath: string) => {}
+  onLinkClick: () => {},
+  onPathChange: () => {},
+  onPathReplace: () => {}
 });
 
 export const useRouter = () => React.useContext(RouterContext);

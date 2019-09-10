@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-var-requires
 const { createMacro, MacroError } = require("babel-plugin-macros");
 
 const { hasOwnProperty } = Object.prototype;
@@ -133,7 +133,7 @@ const routerMacro = ({ references, babel: { types: t } }) => {
     const declaration = router.parentPath.parentPath;
     const ast = buildAST(t, declaration);
 
-    const routerIdent = Object.assign({}, TinyRouter.identifier, { type: "JSXIdentifier" });
+    const routerIdent = { ...TinyRouter.identifier, type: "JSXIdentifier" };
     declaration.replaceWith(buildTinyRouter(t, routerIdent, ast));
   });
 };

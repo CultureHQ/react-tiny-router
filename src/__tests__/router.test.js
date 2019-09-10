@@ -2,6 +2,7 @@ import React from "react";
 
 import { act, cleanup, fireEvent, render } from "@testing-library/react";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { History, useRouter, TinyRouter, Link } from "../router";
 import Router from "../router.macro";
 
