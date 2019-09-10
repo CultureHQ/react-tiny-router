@@ -1,4 +1,10 @@
 {
-  "plugins": ["babel-plugin-macros"],
-  "presets": ["@babel/env", "@babel/react"]
+  "plugins": [
+    "babel-plugin-macros"
+  ],
+  "presets": [
+    "@babel/env",
+    "@babel/react",
+    "@babel/typescript"
+  ]
 }

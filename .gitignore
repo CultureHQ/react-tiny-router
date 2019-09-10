@@ -1,3 +1,6 @@
 /.eslintcache
 /coverage/
 /node_modules/
+
+/*.d.ts
+/*.js
