@@ -1,30 +1,30 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import * as React from "react";
 
 const RouterContext = React.createContext({
   currentPath: "/",
-  onLinkClick: () => {},
-  onPathChange: () => {},
-  onPathReplace: () => {}
+  onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>) => {},
+  onPathChange: (nextPath: string) => {},
+  onPathReplace: (nextPath: string) => {}
 });
 
-export const useRouter = () => useContext(RouterContext);
+export const useRouter = () => React.useContext(RouterContext);
 
-export const History = ({ children }) => {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+export const History = ({ children }: { children: React.ReactNode }) => {
+  const [currentPath, setCurrentPath] = React.useState<string>(window.location.pathname);
 
-  const value = useMemo(
+  const value = React.useMemo(
     () => ({
       currentPath,
-      onLinkClick: event => {
+      onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         setCurrentPath(event.currentTarget.pathname);
         window.history.pushState({}, "", event.currentTarget.pathname);
       },
-      onPathChange: nextPath => {
+      onPathChange: (nextPath: string) => {
         setCurrentPath(nextPath);
         window.history.pushState({}, "", nextPath);
       },
-      onPathReplace: nextPath => {
+      onPathReplace: (nextPath: string) => {
         setCurrentPath(nextPath);
         window.history.replaceState({}, "", nextPath);
       }
@@ -32,11 +32,12 @@ export const History = ({ children }) => {
     [currentPath, setCurrentPath]
   );
 
-  useEffect(
+  React.useEffect(
     () => {
-      const onEvent = event => (
-        setCurrentPath(event.currentTarget.location.pathname)
-      );
+      const onEvent = (event: PopStateEvent) => {
+        const target = event.currentTarget as Window;
+        setCurrentPath(target.location.pathname);
+      };
 
       window.addEventListener("popstate", onEvent);
       return () => window.removeEventListener("popstate", onEvent);
@@ -51,13 +52,25 @@ export const History = ({ children }) => {
   );
 };
 
-export const Link = ({ to, children, ...props }) => {
+type LinkProps = React.HTMLAttributes<HTMLAnchorElement> & {
+  to: string;
+  children: React.ReactNode;
+};
+
+export const Link = ({ to, children, ...props }: LinkProps) => {
   const { onLinkClick } = useRouter();
 
   return <a {...props} href={to} onClick={onLinkClick}>{children}</a>;
 };
 
-export const TinyRouter = ({ ast }) => {
+type ASTNode = {
+  next: { [key: string]: ASTNode } & { ":dynamic"?: ASTNode };
+  render: (...props: string[]) => React.ReactNode;
+};
+
+type ASTRoot = ASTNode & { default?: () => React.ReactNode };
+
+export const TinyRouter = ({ ast }: { ast: ASTRoot }) => {
   const { currentPath } = useRouter();
 
   const segments = currentPath.split("/").filter(Boolean);
@@ -78,7 +91,7 @@ export const TinyRouter = ({ ast }) => {
     }
   }
 
-  matched = matched && node.render;
+  matched = matched && !!node.render;
   if (!matched && ast.default) {
     return ast.default();
   }

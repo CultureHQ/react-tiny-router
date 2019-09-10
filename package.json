@@ -5,6 +5,7 @@
   "main": "router.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore '**/__tests__/**'",
+    "compile": "tsc --noEmit",
     "lint": "chq-scripts lint",
     "test": "chq-scripts test"
   },
@@ -27,12 +28,21 @@
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.6.0",
     "@culturehq/scripts": "^4.0.2",
     "@testing-library/react": "^9.1.0",
+    "@types/node": "^12.7.4",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
     "babel-jest": "^24.8.0",
     "babel-plugin-macros": "^2.6.1",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "typescript": "^3.6.2"
+  },
+  "resolutions": {
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0"
   },
   "eslintConfig": {
     "extends": [
