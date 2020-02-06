@@ -1,6 +1,6 @@
 # react-tiny-router
 
-[![Build Status](https://github.com/CultureHQ/react-tiny-router/workflows/Push/badge.svg)](https://github.com/CultureHQ/react-tiny-router/actions)
+[![Build Status](https://github.com/CultureHQ/react-tiny-router/workflows/Main/badge.svg)](https://github.com/CultureHQ/react-tiny-router/actions)
 [![Package Version](https://img.shields.io/npm/v/react-tiny-router.svg)](https://www.npmjs.com/package/react-tiny-router)
 [![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
 
