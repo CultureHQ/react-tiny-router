@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 
 type ContextValue = {
   currentPath: string;
@@ -14,12 +14,12 @@ const RouterContext = React.createContext<ContextValue>({
   onPathReplace: () => {}
 });
 
-export const useRouter = () => React.useContext(RouterContext);
+export const useRouter = (): ContextValue => useContext(RouterContext);
 
-export const History = ({ children }: { children: React.ReactNode }) => {
-  const [currentPath, setCurrentPath] = React.useState<string>(window.location.pathname);
+export const History: React.FC = ({ children }) => {
+  const [currentPath, setCurrentPath] = useState<string>(window.location.pathname);
 
-  const value = React.useMemo(
+  const value = useMemo(
     () => ({
       currentPath,
       onLinkClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -39,7 +39,7 @@ export const History = ({ children }: { children: React.ReactNode }) => {
     [currentPath, setCurrentPath]
   );
 
-  React.useEffect(
+  useEffect(
     () => {
       const onEvent = (event: PopStateEvent) => {
         const target = event.currentTarget as Window;
@@ -64,7 +64,7 @@ type LinkProps = React.HTMLAttributes<HTMLAnchorElement> & {
   children: React.ReactNode;
 };
 
-export const Link = ({ to, children, ...props }: LinkProps) => {
+export const Link: React.FC<LinkProps> = ({ to, children, ...props }) => {
   const { onLinkClick } = useRouter();
 
   return <a {...props} href={to} onClick={onLinkClick}>{children}</a>;
@@ -72,12 +72,12 @@ export const Link = ({ to, children, ...props }: LinkProps) => {
 
 type ASTNode = {
   next: { [key: string]: ASTNode } & { ":dynamic"?: ASTNode };
-  render: (...props: string[]) => React.ReactNode;
+  render: (...props: string[]) => React.ReactElement;
 };
 
-type ASTRoot = ASTNode & { default?: () => React.ReactNode };
+type ASTRoot = ASTNode & { default?: () => React.ReactElement };
 
-export const TinyRouter = ({ ast }: { ast: ASTRoot }) => {
+export const TinyRouter: React.FC<{ ast: ASTRoot }> = ({ ast }) => {
   const { currentPath } = useRouter();
 
   const segments = currentPath.split("/").filter(Boolean);
